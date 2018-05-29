@@ -15,15 +15,18 @@ public class ImdbService {
     @Inject
     private RestTemplate restTemplate;
 
-    public ResponseEntity<ImdbResponse> getByName(String name) {
+
+    //TODO make this methods like boundary just return respons not entity
+    public ImdbResponse getByName(String name) {
         Imdb imdb = restTemplate.getForObject("http://www.omdbapi.com/?t="+name+"&apikey=86f1cb3&plot=full",Imdb.class);
         ImdbResponse imdbResponse = convert(imdb);
-        return new ResponseEntity<>(imdbResponse,HttpStatus.FOUND);
+        return imdbResponse;
+        //return new ResponseEntity<>(imdbResponse,HttpStatus.OK);
     }
-    public ResponseEntity<ImdbResponse> getById(String id) {
+    public ImdbResponse getById(String id) {
         Imdb imdb = restTemplate.getForObject("http://www.omdbapi.com/?i="+id+"&apikey=86f1cb3&plot=full",Imdb.class);
         ImdbResponse imdbResponse = convert(imdb);
-        return new ResponseEntity<>(imdbResponse,HttpStatus.FOUND);
+        return imdbResponse;
     }
 
     private ImdbResponse convert(Imdb imdb) {
